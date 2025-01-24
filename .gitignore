@@ -1,0 +1,11 @@
+.ipynb_checkpoints/
+__pycache__
+**/.DS_Store
+.settings/
+.classpath
+data/
+*.zst
+target/
+**/*.onnx
+**/node_modules/
+**/.next/
