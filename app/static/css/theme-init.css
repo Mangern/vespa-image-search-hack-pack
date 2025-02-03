@@ -1,0 +1,4 @@
+/* Disable transitions during page load */
+.theme-transition-disabled * {
+    transition: none !important;
+}
