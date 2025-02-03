@@ -43,16 +43,13 @@
                 <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>download-model</id>
+                        <id>export-model</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>src/sh/download_onnx_model.sh</executable>
-                            <arguments>
-                                <argument>src/main/application/models/</argument>
-                            </arguments>
+                            <executable>scripts/prepare-deploy.sh</executable>
                         </configuration>
                     </execution>
                 </executions>

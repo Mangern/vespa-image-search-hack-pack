@@ -186,3 +186,6 @@ websockets==14.2
     # via uvicorn
 yarl==1.18.3
     # via aiohttp
+
+onnx==1.17.0
+    # Added manually

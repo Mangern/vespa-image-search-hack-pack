@@ -28,6 +28,8 @@ public class TextEmbeddingSearcher extends Searcher {
         if(inputString == null || inputString.isBlank())
             return new Result(query, ErrorMessage.createBadRequest("No 'input' query param"));
 
+        int numHits = query.properties().getInteger("hits", 25);
+
         // Tokenize input
         Tensor input = tokenizer.encode(inputString).rename("d0", "d1").expand("d0");
 
@@ -43,7 +45,7 @@ public class TextEmbeddingSearcher extends Searcher {
         // Set up the nearest neighbor retrieval
         NearestNeighborItem nn = new NearestNeighborItem("vit_b_32_image", "vit_b_32_text");
         nn.setAllowApproximate(true);
-        nn.setTargetNumHits(10);
+        nn.setTargetNumHits(numHits);
         nn.setHnswExploreAdditionalHits(100);
         query.getModel().getQueryTree().setRoot(nn);
 

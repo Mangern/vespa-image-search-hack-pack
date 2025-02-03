@@ -46,6 +46,7 @@ public class ImageEmbeddingProcessor extends Processor {
     private final Tensor TENSOR_STD;
 
     private static final int MODEL_IMAGE_SIZE = 224;
+    private static final String MODEL_NAME = "visual"; // models/visual.onnx
 
     @Inject
     public ImageEmbeddingProcessor(
@@ -112,7 +113,7 @@ public class ImageEmbeddingProcessor extends Processor {
         imageTensor = imageTensor.subtract(TENSOR_MEAN).divide(TENSOR_STD);
 
         // Perform inference
-        Tensor result = modelsEvaluator.evaluatorOf("visual").bind("input", imageTensor).evaluate();
+        Tensor result = modelsEvaluator.evaluatorOf(MODEL_NAME).bind("input", imageTensor).evaluate();
 
         // Reshape (d0[], d1[512]) to (x[512]) and normalize
         Tensor embedding = Util.slice(result, "d0:0").rename("d1", "x").l2Normalize("x");
