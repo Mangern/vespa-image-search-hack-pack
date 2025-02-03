@@ -1,5 +1,7 @@
 # Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 
+# This file describes the document type `image_search`.
+# See https://docs.vespa.ai/en/reference/schema-reference.html for info about .sd syntax.
 schema image_search {
   document image_search {
     field image_file_name type string {

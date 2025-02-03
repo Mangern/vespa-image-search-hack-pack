@@ -26,6 +26,13 @@
     </component>
 
     <document-api />
+
+    <processing>
+      <chain id="image_embed_chain">
+        <processor id="ai.vespa.example.ImageEmbeddingProcessor" bundle="text-image-search" />
+      </chain>
+    </processing>
+
   </container>
 
   <!-- Add a content cluster to searchers and document processors -->
@@ -40,4 +47,3 @@
   </content>
 
 </services>
-

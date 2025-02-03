@@ -48,7 +48,7 @@ public class ModelsTest {
         ModelsEvaluator modelsEvaluator = ModelsEvaluatorTester.create("src/main/application/models");
 
         // The "models" directory contains 2 ONNX models: "transformer" and "visual"
-        assertEquals(1, modelsEvaluator.models().size());
+        assertEquals(2, modelsEvaluator.models().size());
         assertTrue(modelsEvaluator.models().containsKey("transformer"));
 
         testTransformerModel(modelsEvaluator);
