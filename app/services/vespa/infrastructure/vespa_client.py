@@ -22,17 +22,10 @@ class VespaClient:
     def _initialize_vespa_app(self) -> Vespa:
         """Initialize Vespa application instance."""
         try:
-            if self.config.TARGET == "cloud":
-                return Vespa(
-                    url=self.config.VESPA_ENDPOINT,
-                    cert=self.config.VESPA_CERTIFICATE,
-                    key=self.config.VESPA_PRIVATE_KEY,
-                )
-            else:
-                return Vespa(
-                    url=self.config.VESPA_URL,
-                    port=int(self.config.VESPA_PORT)
-                )
+            return Vespa(
+                url=self.config.VESPA_URL,
+                port=int(self.config.VESPA_PORT)
+            )
         except Exception as e:
             logger.error(f"Failed to initialize Vespa client: {e}")
             raise VespaConnectionError(f"Failed to initialize Vespa client: {e}")

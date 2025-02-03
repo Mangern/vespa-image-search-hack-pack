@@ -25,7 +25,8 @@ creating a custom API on top of Vespa.
 ### Requires internet connection
 
 ```bash
-git clone -b java https://github.com/Mangern/vespa-image-search-hack-pack.git
+git clone -b java https://github.com/Mangern/vespa-image-search-hack-pack.git && cd vespa-image-search-hack-pack
+git lfs pull
 
 python3 -m venv .venv
 source .venv/bin/activate
@@ -53,7 +54,7 @@ vespa deploy --wait 300
 
 ### Run web app
 ```bash
-python3 dev_python.py
+python3 dev_server.py
 ```
 
 ## Feeding data
