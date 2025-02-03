@@ -11,6 +11,6 @@
 .settings/
 .venv/
 data/
-dataset/flicker8k/
-dataset/flicker8k_embeddings/
+dataset/flickr8k
+dataset/flickr8k_embeddings/
 target/
