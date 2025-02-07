@@ -9,3 +9,4 @@ target/
 **/*.onnx
 **/node_modules/
 **/.next/
+.venv/

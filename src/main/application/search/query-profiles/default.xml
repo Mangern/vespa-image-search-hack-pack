@@ -1,5 +1,0 @@
-<query-profile id="default">
-    <field name="searchChain">mychain</field>
-    <field name="presentation.timing">true</field>
-    <field name="format.tensors">short</field>
-</query-profile>

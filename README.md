@@ -1,31 +1,29 @@
-# Run local Vespa instance
-```bash
-vespa config set target local
-docker run --detach --name vespa --hostname vespa-container \
-  --publish 127.0.0.1:8080:8080 --publish 127.0.0.1:19071:19071 vespaengine/vespa
-```
+# Vespa Semantic Image Search
 
-# Build and deploy
-```bash
-mvn -U clean package
-vespa status deploy --wait 300
-vespa deploy --wait 300
-```
+This demo application takes a textual description and returns images that best match the description.
 
-# Run web app
-```bash
-cd src/webapp
-npm run dev
-```
+For example, the query "a dog catching a frisbee" will return images with dogs catching frisbees. Information 
+about what is in an image is not stored in Vespa: search results are entirely based on image **content**, meaning 
+that this application would work with any set of images.
 
-# Feeding a single image
+![Dog Catching Frisbee](./sample-img/dog-catching-frisbee.png)
 
-```bash
-./src/sh/feed-image.sh ./data/Flicker8k_Dataset/667626_18933d713e.jpg
-```
+This is achieved using embeddings from a pre-trained [CLIP Model](https://openai.com/index/clip/) to perform an ANN search - entirely within Vespa.
 
-# Feed precomputed embeddings
+The application also features a beautiful web frontend for displaying search results and getting search suggestions.
+
+There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the inner workings of the .
+
+# Getting started
+
+There are two versions of this app: a [java version]() showcasing a custom Vespa Java API, and a [python version]() showcasing PyVespa.
+
+Head over to their respective branches to set up an environment to start hacking on this application!
 
 ```bash
-zstdcat flickr-8k-clip-embeddings.jsonl.zst | vespa feed -
+# Java Version
+git clone -b java https://github.com/Mangern/vespa-image-search-hack-pack.git
+
+# Python Version
+git clone -b penne-pixels https://github.com/Mangern/vespa-image-search-hack-pack.git
 ```
