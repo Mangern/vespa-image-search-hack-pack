@@ -20,7 +20,7 @@ There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the 
 
 # Getting started
 
-There are two versions of this app: a [Java version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) showcasing a custom Vespa Java API, and a [Python version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/penne-pixels) showcasing [PyVespa](https://pyvespa.readthedocs.io/en/latest/).
+There are two versions of this app: a [Java version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) showcasing a custom Vespa Java API, and a [Python version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/python) showcasing [PyVespa](https://pyvespa.readthedocs.io/en/latest/).
 
 Head over to their respective branches to set up an environment to start hacking on this application!
 
@@ -29,5 +29,5 @@ Head over to their respective branches to set up an environment to start hacking
 git clone -b java https://github.com/Mangern/vespa-image-search-hack-pack.git
 
 # Python Version
-git clone -b penne-pixels https://github.com/Mangern/vespa-image-search-hack-pack.git
+git clone -b python https://github.com/Mangern/vespa-image-search-hack-pack.git
 ```

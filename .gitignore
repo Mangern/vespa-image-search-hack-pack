@@ -11,3 +11,6 @@ target/
 **/.next/
 .venv/
 .project
+.sesskey
+dataset/
+.env
