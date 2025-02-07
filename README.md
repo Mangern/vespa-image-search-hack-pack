@@ -1,4 +1,4 @@
-# Vespa Semantic Image Search
+# Vespa Semantic Text-Image Search
 
 This demo application takes a textual description and returns images that best match the description.
 
