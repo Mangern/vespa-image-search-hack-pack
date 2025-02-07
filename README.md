@@ -10,9 +10,13 @@ that this application would work with any set of images.
 
 This is achieved using embeddings from a pre-trained [CLIP Model](https://openai.com/index/clip/) to perform an [approximate nearest neighbor (ANN)](https://docs.vespa.ai/en/nearest-neighbor-search.html) search - entirely within Vespa.
 
+- Image embeddings are generated before or when [feeding](https://docs.vespa.ai/en/reads-and-writes.html) the images to the Vespa application.
+- An embedding of the search text is generated for each query.
+- A [HNSW index](https://arxiv.org/abs/1603.09320) is used to efficiently retrieve image embeddings matching the query embedding using the [closeness](https://docs.vespa.ai/en/reference/rank-features.html#closeness(name)) ranking feature.
+
 The application also features a beautiful web frontend for displaying search results and getting search suggestions.
 
-There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the inner workings of the application.
+There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the inner workings of the application in more detail.
 
 # Getting started
 
