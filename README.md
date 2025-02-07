@@ -8,7 +8,7 @@ that this application would work with any set of images.
 
 ![Dog Catching Frisbee](./sample-img/dog-catching-frisbee.png)
 
-This is achieved using embeddings from a pre-trained [CLIP Model](https://openai.com/index/clip/) to perform an ANN search - entirely within Vespa.
+This is achieved using embeddings from a pre-trained [CLIP Model](https://openai.com/index/clip/) to perform an [approximate nearest neighbor (ANN)](https://docs.vespa.ai/en/nearest-neighbor-search.html) search - entirely within Vespa.
 
 The application also features a beautiful web frontend for displaying search results and getting search suggestions.
 
@@ -16,7 +16,7 @@ There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the 
 
 # Getting started
 
-There are two versions of this app: a [java version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) showcasing a custom Vespa Java API, and a [python version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/penne-pixels) showcasing [PyVespa](https://pyvespa.readthedocs.io/en/latest/).
+There are two versions of this app: a [Java version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) showcasing a custom Vespa Java API, and a [Python version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/penne-pixels) showcasing [PyVespa](https://pyvespa.readthedocs.io/en/latest/).
 
 Head over to their respective branches to set up an environment to start hacking on this application!
 
