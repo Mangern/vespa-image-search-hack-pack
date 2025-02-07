@@ -8,11 +8,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Base64;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.inject.Inject;
@@ -83,63 +85,77 @@ public class ImageEmbeddingProcessor extends Processor {
             return response;
         }
 
-        JSONObject json = new JSONObject(jsonString.toString());
+        JSONArray jsonArray = new JSONArray(jsonString.toString());
 
-        if (!json.has("image_file_name")) {
-            throw new RuntimeException("Missing key 'image_file_name' in JSON data");
+        int feedCount = 0;
+        int totalCount = jsonArray.length();
+        for (Object element : jsonArray) {
+
+            if (!(element instanceof JSONObject)) {
+                logger.warning("Invalid json: Expected JSONObject, got: " + element.getClass().toString());
+                continue;
+            }
+
+            JSONObject json = (JSONObject)element;
+
+            if (!json.has("image_file_name")) {
+                throw new RuntimeException("Missing key 'image_file_name' in JSON data");
+            }
+
+            if (!json.has("image")) {
+                throw new RuntimeException("Missing key 'image' in JSON data");
+            }
+
+            String imageFileName = json.getString("image_file_name");
+            String base64Image   = json.getString("image");
+
+            // Decode image payload
+            BufferedImage bufferedImage;
+            try {
+                bufferedImage = readImageFromBase64(base64Image);
+            } catch(IOException exception) {
+                logger.info("IOException when converting image: " + exception.getMessage());
+                return response;
+            }
+
+            // Resize and convert to float Tensor
+            BufferedImage resized = resizeImage(bufferedImage);
+            Tensor imageTensor = tensorFromImageData(resized);
+
+            // Apply input normalization
+            imageTensor = imageTensor.subtract(TENSOR_MEAN).divide(TENSOR_STD);
+
+            // Perform inference
+            Tensor result = modelsEvaluator.evaluatorOf(MODEL_NAME).bind("input", imageTensor).evaluate();
+
+            // Reshape (d0[], d1[512]) to (x[512]) and normalize
+            Tensor embedding = Util.slice(result, "d0:0").rename("d1", "x").l2Normalize("x");
+
+            // Convert image file name to an appropriate document id
+            String imageId;
+            if (imageFileName.contains(".")) {
+                imageId = imageFileName.split(Pattern.quote("."))[0];
+            } else {
+                imageId = imageFileName;
+            }
+
+            // Create a document put operation
+            Processing processing = new Processing();
+            Document document = new Document(this.imageDocumentType, "id:image_search:image_search::"+imageId);
+
+            // See src/main/application/image_search.sd for document type description
+            document.setFieldValue("image_file_name", imageFileName);
+            document.setFieldValue("vit_b_32_image", new TensorFieldValue(embedding));
+            DocumentPut documentPut = new DocumentPut(document);
+            processing.addDocumentOperation(documentPut);
+
+            documentApiSession.put(documentPut);
+
+            logger.info("Put document: " + imageId);
+            ++feedCount;
         }
 
-        if (!json.has("image")) {
-            throw new RuntimeException("Missing key 'image' in JSON data");
-        }
-
-        String imageFileName = json.getString("image_file_name");
-        String base64Image   = json.getString("image");
-
-        // Decode image payload
-        BufferedImage bufferedImage;
-        try {
-            bufferedImage = readImageFromBase64(base64Image);
-        } catch(IOException exception) {
-            logger.info("IOException when converting image: " + exception.getMessage());
-            return response;
-        }
-
-        // Resize and convert to float Tensor
-        BufferedImage resized = resizeImage(bufferedImage);
-        Tensor imageTensor = tensorFromImageData(resized);
-
-        // Apply input normalization
-        imageTensor = imageTensor.subtract(TENSOR_MEAN).divide(TENSOR_STD);
-
-        // Perform inference
-        Tensor result = modelsEvaluator.evaluatorOf(MODEL_NAME).bind("input", imageTensor).evaluate();
-
-        // Reshape (d0[], d1[512]) to (x[512]) and normalize
-        Tensor embedding = Util.slice(result, "d0:0").rename("d1", "x").l2Normalize("x");
-
-        // Convert image file name to an appropriate document id
-        String imageId;
-        if (imageFileName.contains(".")) {
-            imageId = imageFileName.split(Pattern.quote("."))[0];
-        } else {
-            imageId = imageFileName;
-        }
-
-        // Create a document put operation
-        Processing processing = new Processing();
-        Document document = new Document(this.imageDocumentType, "id:image_search:image_search::"+imageId);
-
-        // See src/main/application/image_search.sd for document type description
-        document.setFieldValue("image_file_name", imageFileName);
-        document.setFieldValue("vit_b_32_image", new TensorFieldValue(embedding));
-        DocumentPut documentPut = new DocumentPut(document);
-        processing.addDocumentOperation(documentPut);
-
-        documentApiSession.put(documentPut);
-
-        logger.info("Put document: " + imageId);
-
+        logger.info("Fed " + feedCount + " / " + totalCount + " documents");
         // Optionally we could return a more meaningful response
         return response;
     }

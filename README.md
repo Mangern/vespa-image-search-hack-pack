@@ -87,7 +87,9 @@ shows what happens when an image is fed this way.
 
 ## Next steps
 
-Try to feed your own data by using the provided shell script.
+- Try to feed your own data by using the provided shell script.
+- Modify the Query Processor to handle a stream of data and use asynchronous feeding.
+- Visit the [Vespa documentation](https://docs.vespa.ai/)
 
 Interesting files to explore and modify:
 
@@ -98,3 +100,4 @@ This is where computation of embeddings when feeding happens.
 This is a custom Vespa Searcher that creates an embedding of the user supplied text query and uses it to perform a nearest neighbor query 
 on the indexed image embeddings.
 - [app/](./app/) - Contains all the front-end code.
+
