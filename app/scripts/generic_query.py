@@ -6,7 +6,7 @@ from ..services.vespa.utils.logger import Logger
 logger = Logger.get_logger()
 
 # Default test query
-DEFAULT_QUERY = """select * from image_search where image_file_name contains "1119015538_e8e796281e.webp\""""
+DEFAULT_QUERY = """select * from image_search where image_file_name contains "1119015538_e8e796281e.jpg\""""
 
 
 def parse_args():

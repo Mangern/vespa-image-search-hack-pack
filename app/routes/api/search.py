@@ -28,7 +28,7 @@ def register_routes(rt):
                 logger.info(f"First result: {results['root']['children'][0]}")
 
             # Extract image paths and ensure they're in the correct format
-            # The component will add /dataset/ prefix, so we just need flickr8k/image.webp format
+            # The component will add /dataset/ prefix, so we just need flickr8k/image.jpg format
             images = []
             if "root" in results and "children" in results["root"]:
                 for hit in results["root"]["children"]:

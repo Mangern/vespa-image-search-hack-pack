@@ -497,7 +497,7 @@ class GridManager:
             # Only process files in chunks
             self._image_cache = list(
                 islice(
-                    (str(p.relative_to("dataset")) for p in image_dir.glob("*.webp")),
+                    (str(p.relative_to("dataset")) for p in image_dir.glob("*.jpg")),
                     0,
                     None,
                     1,
