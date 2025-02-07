@@ -12,11 +12,11 @@ This is achieved using embeddings from a pre-trained [CLIP Model](https://openai
 
 The application also features a beautiful web frontend for displaying search results and getting search suggestions.
 
-There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the inner workings of the .
+There is a [blog post](https://blog.vespa.ai/text-image-search/) describing the inner workings of the application.
 
 # Getting started
 
-There are two versions of this app: a [java version]() showcasing a custom Vespa Java API, and a [python version]() showcasing PyVespa.
+There are two versions of this app: a [java version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) showcasing a custom Vespa Java API, and a [python version](https://github.com/Mangern/vespa-image-search-hack-pack/tree/penne-pixels) showcasing [PyVespa](https://pyvespa.readthedocs.io/en/latest/).
 
 Head over to their respective branches to set up an environment to start hacking on this application!
 
