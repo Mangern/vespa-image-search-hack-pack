@@ -1,3 +1,14 @@
+/**
+ * ImageEmbeddingProcessor
+ *
+ * This processor is part of the image_embed_chain defined in services.xml.
+ * It takes a JSON payload consisting of Base64 encoded images, 
+ * computes their CLIP embedding and feeds the resulting tensors to Vespa.
+ * See: https://docs.vespa.ai/en/jdisc/processing.html
+ *
+ * DISCLAIMER: This is not meant to be a production-ready Processor. It is rather meant as an example
+ *             of how to extend Vespa using Java. Care has to be taken to ensure efficient feeding and querying.
+ */
 package ai.vespa.example;
 
 import java.awt.Graphics2D;
@@ -8,7 +19,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Base64;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
