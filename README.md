@@ -105,13 +105,15 @@ The example is based on the Flicker8K dataset, which contains $8091$ images.
 There is a script for downloading and extracting the dataset.
 The total size after extraction is about $350$ MB.
 
-
-Example images and embeddings from the Flicker8K dataset is included with a shell script:
-
 ```bash
 # Extract dataset
 ./sh/extract-dataset.sh
+```
 
+### Precomputed embeddings
+Example images and embeddings from the Flicker8K dataset is included with a shell script:
+
+```bash
 # Feed precomputed embeddings
 zstdcat dataset/flickr8k/embeddings-vit-b-32.jsonl.zst | vespa feed -
 ```
@@ -130,6 +132,20 @@ If everything was successful you should get an output like this:
 
 This means that $8091$ documents were successfully fed to the application.
 
+### Computing embeddings yourself
+Included is also a script for computing embeddings yourself based on the dataset.
+
+The script is located in [./app/scripts/vespa_feed.py](./app/scripts/vespa_feed.py).
+It loads images from the `dataset` folder, computes their embeddings and feeds them to Vespa using the PyVespa API.
+
+To run the script (using configuration in `.env`), simply execute
+
+```bash
+python3 -m app.scripts.vespa_feed
+```
+
+It can take some time if you are running on CPU (on my x86 Mac it took about 10 minutes).
+
 ## Run the frontend server
 ```bash
 python3 dev_server.py
@@ -141,3 +157,13 @@ Try to search for something:)
 ```bash
 docker rm -f imagesearch
 ```
+
+# Next steps
+If you want to use this Hack Pack as a starting point for your next AI project, you probably want to feed your own data.
+These are the necessary places to make your own modifications:
+
+- [schema_config.py](./app/services/vespa/config/schema_config.py) Defines the vespa Schema used to represent image documents, as well as the HNSW index used for retrieval.
+- [clip_service.py](./app/services/vespa/services/clip_service.py) Defines the model-specific functions used to run inference with the CLIP model.
+- See the documentation on [Feeding documents to Vespa](https://pyvespa.readthedocs.io/en/latest/getting-started-pyvespa.html#Feeding-documents-to-Vespa) for how to feed documents from PyVespa.
+The script [vespa_feed.py](./app/scripts/vespa_feed.py) shows an example.
+- See the files over at [./app/scripts/](./app/scripts/) to see examples of operations you can do with PyVespa.
