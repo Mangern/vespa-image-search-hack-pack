@@ -5,9 +5,9 @@ This demo application takes a textual description and returns images that best m
 TLDR: Checkout a branch and get hacking!
 
 - [Python branch](https://github.com/Mangern/vespa-image-search-hack-pack/tree/python) - Easiest to set up, all config and deployment is Python-based.
-- [Java branch](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) - Lower level control of Vespa application deployment, also showcasing custom [Java components](https://docs.vespa.ai/en/jdisc/).
+- [Java branch](https://github.com/Mangern/vespa-image-search-hack-pack/tree/java) - Fine-grained control of Vespa application development, also showcasing custom [Java components](https://docs.vespa.ai/en/jdisc/).
 
-For example, the query "a dog catching a frisbee" will return images with dogs catching frisbees. Information 
+In this web app, the user can for example query "a dog catching a frisbee" and it will return images with dogs catching frisbees. Information 
 about what is in an image is not stored in Vespa: search results are entirely based on image **content**, meaning 
 that this application would work with any set of images.
 
